@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Coltrane - Semantik Arşiv</title>
+    <style>
+        :root { --bg-color: #121212; --card-bg: #1e1e1e; --text-main: #f5f5f5; --accent: #d4af37; /* Altın sarısı (Caz teması) */ }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; line-height: 1.6; }
+        header { text-align: center; padding: 20px 0; border-bottom: 2px solid var(--accent); margin-bottom: 30px; }
+        h1 { margin: 0; color: var(--accent); font-size: 2.5em; letter-spacing: 2px; }
+        
+        .controls { display: flex; justify-content: space-between; align-items: center; max-width: 1000px; margin: 0 auto 30px auto; flex-wrap: wrap; gap: 15px; }
+        .search-box { padding: 10px 15px; font-size: 16px; border-radius: 5px; border: none; width: 300px; background-color: #2c2c2c; color: white; }
+        .download-btn { background-color: var(--accent); color: #000; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+        .download-btn:hover { background-color: #ffd700; transform: scale(1.05); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+        .card { background-color: var(--card-bg); padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.2s; cursor: pointer; }
+        .card:hover { transform: translateY(-5px); }
+        .card h2 { margin-top: 0; color: var(--accent); }
+        
+        /* Detay Paneli */
+        #detay-paneli { display: none; max-width: 1000px; margin: 0 auto; background-color: var(--card-bg); padding: 30px; border-radius: 10px; border-top: 4px solid var(--accent); }
+        .back-btn { background: none; border: 1px solid var(--accent); color: var(--accent); padding: 8px 15px; cursor: pointer; border-radius: 5px; margin-bottom: 20px; }
+        .back-btn:hover { background: var(--accent); color: #000; }
+        
+        .lists-container { display: flex; gap: 40px; flex-wrap: wrap; }
+        .list-section { flex: 1; min-width: 250px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>JOHN COLTRANE ARŞİVİ</h1>
+        <p>Semantik Web Aşama 3 - XML Veri Görselleştirme</p>
+    </header>
+
+    <div class="controls" id="kontroller">
+        <input type="text" id="arama" class="search-box" placeholder="Albüm adı ara..." onkeyup="filtrele()">
+        <div>
+            <a href="albumler.xml" download class="download-btn">XML: Albümler</a>
+            <a href="muzisyenler.xml" download class="download-btn">XML: Müzisyenler</a>
+            <a href="parcalar.xml" download class="download-btn">XML: Parçalar</a>
+        </div>
+    </div>
+
+    <div id="album-sahnesi" class="grid">
+        <div style="text-align:center; width:100%;">Veriler XML'den yükleniyor... (Eğer bu yazı gitmiyorsa Python sunucusunu açmayı unutma!)</div>
+    </div>
+
+    <div id="detay-paneli">
+        <button class="back-btn" onclick="anaSayfayaDon()">← Geri Dön</button>
+        <h2 id="detay-baslik">Albüm Adı</h2>
+        <p><strong>Yıl:</strong> <span id="detay-yil"></span> | <strong>Plak Şirketi:</strong> <span id="detay-sirket"></span></p>
+        
+        <div class="lists-container">
+            <div class="list-section">
+                <h3 style="color:var(--accent)">Albümdeki Parçalar</h3>
+                <ul id="detay-parcalar"></ul>
+            </div>
+            <div class="list-section">
+                <h3 style="color:var(--accent)">Kayıt Personeli (Müzisyenler)</h3>
+                <p style="font-size: 0.8em; color: #aaa;">Not: XML yapısı gereği bu aşamada müzisyenler albüme doğrudan bağlanmamış olsa da Semantik (RDF) aşamasında bu bağ kurulacaktır.</p>
+                <ul id="detay-muzisyenler"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global değişkenlerimiz
+        let tumAlbumler = [];
+        let tumParcalar = [];
+        let tumMuzisyenler = [];
+
+        // Sayfa yüklendiğinde XML verilerini çek (Hocanın istediği fetch + DOMParser kuralı)
+        async function verileriYukle() {
+            try {
+                // 3 XML dosyasını aynı anda çekiyoruz
+                const [resAlbum, resParca, resMuzisyen] = await Promise.all([
+                    fetch('albumler.xml'), fetch('parcalar.xml'), fetch('muzisyenler.xml')
+                ]);
+
+                // Metin olarak al ve XML'e dönüştür (DOMParser)
+                const parser = new DOMParser();
+                const xmlAlbum = parser.parseFromString(await resAlbum.text(), "text/xml");
+                const xmlParca = parser.parseFromString(await resParca.text(), "text/xml");
+                const xmlMuzisyen = parser.parseFromString(await resMuzisyen.text(), "text/xml");
+
+                // Verileri işleyip kolay kullanılabilir dizilere atıyoruz
+                tumAlbumler = Array.from(xmlAlbum.getElementsByTagName("Album")).map(node => ({
+                    id: node.getAttribute("id"),
+                    baslik: node.getElementsByTagName("Baslik")[0].textContent,
+                    yil: node.getElementsByTagName("Yil")[0].textContent,
+                    sirket: node.getElementsByTagName("PlakSirketi")[0].textContent
+                }));
+
+                tumParcalar = Array.from(xmlParca.getElementsByTagName("Parca")).map(node => ({
+                    albumRef: node.getAttribute("albumRef"),
+                    isim: node.getElementsByTagName("Isim")[0].textContent,
+                    sure: node.getElementsByTagName("Sure")[0].textContent
+                }));
+
+                tumMuzisyenler = Array.from(xmlMuzisyen.getElementsByTagName("Muzisyen")).map(node => ({
+                    isim: node.getElementsByTagName("Isim")[0].textContent,
+                    enstruman: node.getElementsByTagName("Enstruman")[0].textContent
+                }));
+
+                ekranaBas(tumAlbumler); // Başlangıçta hepsini çiz
+
+            } catch (hata) {
+                document.getElementById("album-sahnesi").innerHTML = `<h3 style="color:red; text-align:center;">Veriler çekilemedi! Lütfen 'python -m http.server 8000' komutuyla çalıştırdığından emin ol.</h3>`;
+                console.error(hata);
+            }
+        }
+
+        // Ana sayfaya albüm kartlarını çizen fonksiyon
+        function ekranaBas(albumDizisi) {
+            const sahne = document.getElementById("album-sahnesi");
+            sahne.innerHTML = ""; // Temizle
+
+            albumDizisi.forEach(album => {
+                const kart = document.createElement("div");
+                kart.className = "card";
+                kart.innerHTML = `
+                    <h2>${album.baslik}</h2>
+                    <p>📅 Yıl: ${album.yil}</p>
+                    <p>💿 Şirket: ${album.sirket}</p>
+                    <p style="font-size:0.8em; color:#888;">Detayları görmek için tıkla</p>
+                `;
+                // Karta tıklanınca detay sayfasını aç
+                kart.onclick = () => detayGoster(album);
+                sahne.appendChild(kart);
+            });
+        }
+
+        // Detay Sayfası Gösterimi
+        function detayGoster(album) {
+            document.getElementById("album-sahnesi").style.display = "none"; // Listeyi gizle
+            document.getElementById("kontroller").style.display = "none"; // Arama çubuğunu gizle
+            document.getElementById("detay-paneli").style.display = "block"; // Paneli göster
+
+            document.getElementById("detay-baslik").textContent = album.baslik;
+            document.getElementById("detay-yil").textContent = album.yil;
+            document.getElementById("detay-sirket").textContent = album.sirket;
+
+            // İlgili albümün parçalarını filtrele ve listele
+            const albumeAitParcalar = tumParcalar.filter(p => p.albumRef === album.id);
+            const parcaListesi = document.getElementById("detay-parcalar");
+            parcaListesi.innerHTML = "";
+            albumeAitParcalar.forEach(p => {
+                parcaListesi.innerHTML += `<li><strong>${p.isim}</strong> (${p.sure})</li>`;
+            });
+
+            // Müzisyenleri listele (Şu an hepsi ortak listeleniyor, RDF'te ayrılacak)
+            const muzisyenListesi = document.getElementById("detay-muzisyenler");
+            muzisyenListesi.innerHTML = "";
+            tumMuzisyenler.forEach(m => {
+                muzisyenListesi.innerHTML += `<li>${m.isim} - <em>${m.enstruman}</em></li>`;
+            });
+        }
+
+        // Geri Dön Butonu
+        function anaSayfayaDon() {
+            document.getElementById("detay-paneli").style.display = "none";
+            document.getElementById("album-sahnesi").style.display = "grid";
+            document.getElementById("kontroller").style.display = "flex";
+        }
+
+        // Arama (Filtreleme) Özelliği
+        function filtrele() {
+            const aranan = document.getElementById("arama").value.toLowerCase();
+            const filtrelenmis = tumAlbumler.filter(a => a.baslik.toLowerCase().includes(aranan));
+            ekranaBas(filtrelenmis);
+        }
+
+        // Sayfa açıldığında sistemi başlat
+        verileriYukle();
+    </script>
+</body>
+</html>

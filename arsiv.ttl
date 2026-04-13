@@ -1,0 +1,70 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix ex: <http://yunus.hacettepe.edu.tr/~utku.ugurlu/ontoloji.html#> .
+
+# ---------------------------------------------------
+# 1. SINIF TANIMLAMALARI (Ontoloji Temeli)
+# ---------------------------------------------------
+ex:Muzisyen a rdfs:Class ; rdfs:label "Caz Müzisyeni" .
+ex:Album a rdfs:Class ; rdfs:label "Müzik Albümü" .
+ex:Parca a rdfs:Class ; rdfs:label "Müzik Parçası" .
+
+# ---------------------------------------------------
+# 2. ANA KAYNAK (Merkez Düğüm)
+# ---------------------------------------------------
+ex:john_coltrane a ex:Muzisyen ;
+    dc:title "John Coltrane" ;
+    schema:hasOccupation "Tenor Saxophonist" .
+
+# ---------------------------------------------------
+# 3. ALBÜMLER VE İLİŞKİLER
+# ---------------------------------------------------
+# Blue Train Albümü
+ex:blue_train a ex:Album ;
+    dc:title "Blue Train" ;
+    dc:date "1958" ;
+    dc:publisher "Blue Note" ;
+    schema:byArtist ex:john_coltrane ;
+    ex:hasMusician ex:lee_morgan, ex:curtis_fuller, ex:kenny_drew, ex:paul_chambers, ex:philly_joe_jones .
+
+# Giant Steps Albümü
+ex:giant_steps a ex:Album ;
+    dc:title "Giant Steps" ;
+    dc:date "1960" ;
+    dc:publisher "Atlantic" ;
+    schema:byArtist ex:john_coltrane ;
+    ex:hasMusician ex:paul_chambers, ex:tommy_flanagan, ex:art_taylor .
+
+# A Love Supreme Albümü
+ex:a_love_supreme a ex:Album ;
+    dc:title "A Love Supreme" ;
+    dc:date "1965" ;
+    dc:publisher "Impulse!" ;
+    schema:byArtist ex:john_coltrane ;
+    ex:hasMusician ex:mccoy_tyner, ex:jimmy_garrison, ex:elvin_jones .
+
+# ---------------------------------------------------
+# 4. PARÇALAR (Albümlere Bağlanıyor)
+# ---------------------------------------------------
+ex:p_blue_train a ex:Parca ; dc:title "Blue Train" ; schema:isPartOf ex:blue_train .
+ex:p_moments_notice a ex:Parca ; dc:title "Moment's Notice" ; schema:isPartOf ex:blue_train .
+ex:p_giant_steps a ex:Parca ; dc:title "Giant Steps" ; schema:isPartOf ex:giant_steps .
+ex:p_naima a ex:Parca ; dc:title "Naima" ; schema:isPartOf ex:giant_steps .
+ex:p_acknowledgement a ex:Parca ; dc:title "Part I: Acknowledgement" ; schema:isPartOf ex:a_love_supreme .
+ex:p_resolution a ex:Parca ; dc:title "Part II: Resolution" ; schema:isPartOf ex:a_love_supreme .
+
+# ---------------------------------------------------
+# 5. DİĞER MÜZİSYENLER (Enstrümanlarıyla Birlikte)
+# ---------------------------------------------------
+ex:paul_chambers a ex:Muzisyen ; dc:title "Paul Chambers" ; schema:playsInstrument "Double Bass" .
+ex:lee_morgan a ex:Muzisyen ; dc:title "Lee Morgan" ; schema:playsInstrument "Trumpet" .
+ex:curtis_fuller a ex:Muzisyen ; dc:title "Curtis Fuller" ; schema:playsInstrument "Trombone" .
+ex:kenny_drew a ex:Muzisyen ; dc:title "Kenny Drew" ; schema:playsInstrument "Piano" .
+ex:philly_joe_jones a ex:Muzisyen ; dc:title "Philly Joe Jones" ; schema:playsInstrument "Drums" .
+ex:tommy_flanagan a ex:Muzisyen ; dc:title "Tommy Flanagan" ; schema:playsInstrument "Piano" .
+ex:art_taylor a ex:Muzisyen ; dc:title "Art Taylor" ; schema:playsInstrument "Drums" .
+ex:mccoy_tyner a ex:Muzisyen ; dc:title "McCoy Tyner" ; schema:playsInstrument "Piano" .
+ex:jimmy_garrison a ex:Muzisyen ; dc:title "Jimmy Garrison" ; schema:playsInstrument "Double Bass" .
+ex:elvin_jones a ex:Muzisyen ; dc:title "Elvin Jones" ; schema:playsInstrument "Drums" .
