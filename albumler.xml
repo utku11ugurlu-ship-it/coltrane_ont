@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Albumler>
+    <Album id="a1">
+        <Baslik>Blue Train</Baslik>
+        <Yil>1957</Yil>
+        <PlakSirketi>Blue Note</PlakSirketi>
+    </Album>
+    <Album id="a2">
+        <Baslik>Giant Steps</Baslik>
+        <Yil>1960</Yil>
+        <PlakSirketi>Atlantic</PlakSirketi>
+    </Album>
+    <Album id="a3">
+        <Baslik>A Love Supreme</Baslik>
+        <Yil>1965</Yil>
+        <PlakSirketi>Impulse!</PlakSirketi>
+    </Album>
+</Albumler>

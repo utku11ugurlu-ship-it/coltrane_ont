@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parcalar>
+    <Parca id="p1" albumRef="a1">
+        <Isim>Blue Train</Isim>
+        <Sure>10:43</Sure>
+        <Personel>John Coltrane, Lee Morgan, Curtis Fuller, Kenny Drew, Paul Chambers, Philly Joe Jones</Personel>
+    </Parca>
+    <Parca id="p2" albumRef="a1">
+        <Isim>Moment's Notice</Isim>
+        <Sure>09:10</Sure>
+        <Personel>John Coltrane, Lee Morgan, Curtis Fuller, Kenny Drew, Paul Chambers, Philly Joe Jones</Personel>
+    </Parca>
+    <Parca id="p3" albumRef="a1">
+        <Isim>Locomotion</Isim>
+        <Sure>07:14</Sure>
+        <Personel>John Coltrane, Lee Morgan, Curtis Fuller, Kenny Drew, Paul Chambers, Philly Joe Jones</Personel>
+    </Parca>
+    <Parca id="p4" albumRef="a1">
+        <Isim>I'm Old Fashioned</Isim>
+        <Sure>07:58</Sure>
+        <Personel>John Coltrane, Lee Morgan, Curtis Fuller, Kenny Drew, Paul Chambers, Philly Joe Jones</Personel>
+    </Parca>
+    <Parca id="p5" albumRef="a1">
+        <Isim>Lazy Bird</Isim>
+        <Sure>07:00</Sure>
+        <Personel>John Coltrane, Lee Morgan, Curtis Fuller, Kenny Drew, Paul Chambers, Philly Joe Jones</Personel>
+    </Parca>
+
+    <Parca id="p6" albumRef="a2">
+        <Isim>Giant Steps</Isim>
+        <Sure>04:43</Sure>
+        <Personel>John Coltrane, Tommy Flanagan, Paul Chambers, Art Taylor</Personel>
+    </Parca>
+    <Parca id="p7" albumRef="a2">
+        <Isim>Cousin Mary</Isim>
+        <Sure>05:45</Sure>
+        <Personel>John Coltrane, Tommy Flanagan, Paul Chambers, Art Taylor</Personel>
+    </Parca>
+    <Parca id="p8" albumRef="a2">
+        <Isim>Countdown</Isim>
+        <Sure>02:21</Sure>
+        <Personel>John Coltrane, Tommy Flanagan, Paul Chambers, Art Taylor</Personel>
+    </Parca>
+    <Parca id="p9" albumRef="a2">
+        <Isim>Spiral</Isim>
+        <Sure>05:56</Sure>
+        <Personel>John Coltrane, Tommy Flanagan, Paul Chambers, Art Taylor</Personel>
+    </Parca>
+    <Parca id="p10" albumRef="a2">
+        <Isim>Syeeda's Song Flute</Isim>
+        <Sure>07:00</Sure>
+        <Personel>John Coltrane, Tommy Flanagan, Paul Chambers, Art Taylor</Personel>
+    </Parca>
+
+    <Parca id="p13" albumRef="a3">
+        <Isim>Part I: Acknowledgement</Isim>
+        <Sure>07:47</Sure>
+        <Personel>John Coltrane, McCoy Tyner, Jimmy Garrison, Elvin Jones</Personel>
+    </Parca>
+    <Parca id="p14" albumRef="a3">
+        <Isim>Part II: Resolution</Isim>
+        <Sure>07:22</Sure>
+        <Personel>John Coltrane, McCoy Tyner, Jimmy Garrison, Elvin Jones</Personel>
+    </Parca>
+    <Parca id="p15" albumRef="a3">
+        <Isim>Part III: Pursuance</Isim>
+        <Sure>10:45</Sure>
+        <Personel>John Coltrane, McCoy Tyner, Jimmy Garrison, Elvin Jones</Personel>
+    </Parca>
+    <Parca id="p16" albumRef="a3">
+        <Isim>Part IV: Psalm</Isim>
+        <Sure>07:05</Sure>
+        <Personel>John Coltrane, McCoy Tyner, Jimmy Garrison, Elvin Jones</Personel>
+    </Parca>
+</Parcalar>

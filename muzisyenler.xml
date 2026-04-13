@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Muzisyenler>
+    <Muzisyen id="m1">
+        <Isim>John Coltrane</Isim>
+        <Enstruman>Tenor Saxophone</Enstruman>
+    </Muzisyen>
+    <Muzisyen id="m2">
+        <Isim>Lee Morgan</Isim>
+        <Enstruman>Trumpet</Enstruman>
+    </Muzisyen>
+    <Muzisyen id="m3">
+        <Isim>Curtis Fuller</Isim>
+        <Enstruman>Trombone</Enstruman>
+    </Muzisyen>
+    <Muzisyen id="m4">
+        <Isim>Kenny Drew</Isim>
+        <Enstruman>Piano</Enstruman>
+    </Muzisyen>
+    <Muzisyen id="m5">
+        <Isim>Paul Chambers</Isim>
+        <Enstruman>Double Bass</Enstruman>
+    </Muzisyen>
+    <Muzisyen id="m6">
+        <Isim>Philly Joe Jones</Isim>
+        <Enstruman>Drums</Enstruman>
+    </Muzisyen>
+
+    <Muzisyen id="m7">
+        <Isim>Tommy Flanagan</Isim>
+        <Enstruman>Piano</Enstruman>
+    </Muzisyen>
+    <Muzisyen id="m8">
+        <Isim>Art Taylor</Isim>
+        <Enstruman>Drums</Enstruman>
+    </Muzisyen>
+
+    <Muzisyen id="m9">
+        <Isim>McCoy Tyner</Isim>
+        <Enstruman>Piano</Enstruman>
+    </Muzisyen>
+    <Muzisyen id="m10">
+        <Isim>Jimmy Garrison</Isim>
+        <Enstruman>Double Bass</Enstruman>
+    </Muzisyen>
+    <Muzisyen id="m11">
+        <Isim>Elvin Jones</Isim>
+        <Enstruman>Drums</Enstruman>
+    </Muzisyen>
+</Muzisyenler>
